@@ -17,3 +17,12 @@ QUnit.test( "When someone is at #3...", function( assert ) {
         "Use #1."
     )
 });
+QUnit.test( "When someone is at #1...", function( assert ) {
+    const occupiedUrinals = [true, false, false, false, false]
+
+    assert.deepEqual( 
+        urinalToUse(occupiedUrinals),
+        [3], 
+        "Use #3."
+    )
+});
