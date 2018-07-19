@@ -7,10 +7,10 @@ const urinalToUse = isOccupied => {
     // Add a zeroeth item to the array so we can use
     // indeces as if they started at one and
     // make it a different type so it's easier to
-    // catch mistakes.
+    // catch mistakes. This will clarify all array accessing.
     isOccupied = ["zero"].concat(isOccupied)
 
-    if (isOccupied[3]) {  // Urinal #3 = index 2 or 3 - 1
+    if (isOccupied[3]) {
         return [1]
     } else if (isOccupied[1]) {
         return [3]
