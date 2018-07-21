@@ -11,6 +11,10 @@ const urinalToUse = isOccupied => {
     // A different type makes accessing mistakes more obvious. 
     isOccupied = ["zero"].concat(isOccupied)
 
+    // TODO: Most of this code could probably be simplified into
+    // a single concept - something like "if there's a urinal
+    // available without an occupied neighboring urinal, choose
+    // the first such urinal"
     if (isOccupied[1] && isOccupied[3]) {
         return [5]
     } else if (isOccupied[3]) {
