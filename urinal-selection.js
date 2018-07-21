@@ -17,14 +17,16 @@ const urinalToUse = isOccupied => {
     // the first such urinal"
     if (isOccupied[1] && isOccupied[3]) {
         return [5]
-    } else if (isOccupied[3]) {
-        return [1]
-    } else if (isOccupied[1]) {
+
+    } else if (isOccupied[1]) { // if #5 is occupied or not
         return [3]
-    } else if (isOccupied[5]) {
+
+    } else if (isOccupied[3] || isOccupied[5]) {
         return [1]
+
     } else if (isOccupied[2]) {
         return [4]
+        
     } else if (!isOccupied.includes(true)) {
         return [1, 2, 3, 4]
     }
