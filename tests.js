@@ -5,7 +5,7 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [1, 2, 3, 4], 
-        "When no one is there, we chose any urinal except #5 (1-4)."
+        "When no one is there, we choose any urinal except #5 (1-4)."
     )
 
     occupiedUrinals = [false, false, true, false, false]
