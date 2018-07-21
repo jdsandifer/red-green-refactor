@@ -11,7 +11,9 @@ const urinalToUse = isOccupied => {
     // A different type makes accessing mistakes more obvious. 
     isOccupied = ["zero"].concat(isOccupied)
 
-    if (isOccupied[3]) {
+    if (isOccupied[1] && isOccupied[3]) {
+        return [5]
+    } else if (isOccupied[3]) {
         return [1]
     } else if (isOccupied[1]) {
         return [3]
