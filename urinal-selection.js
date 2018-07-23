@@ -9,28 +9,54 @@ const urinalToUse = isOccupied => {
     // indeces as if they started at one. 
     // This will simplify array accessing.
     // A different type makes accessing mistakes more obvious. 
-    isOccupied = ["zero"].concat(isOccupied)
+    //isOccupied = ["zero"].concat(isOccupied)
 
-    // TODO: Most of this code could probably be simplified into
-    // a single concept - something like "if there's a urinal
-    // available without an occupied neighboring urinal, choose
-    // the first such urinal"
-    if (isOccupied[1] && isOccupied[3]) {
-        return [5]
+    // If the bathroom is open, we can choose any urinal except
+    // the last one.
+    if (!isOccupied.includes(true)) {
+        // Convert array to one-based indeces
+        let result = isOccupied.map((value, index, array) => {
+            return index + 1
+        })
 
-    } else if (isOccupied[1]) { // if #5 is occupied or not
-        return [3]
-
-    } else if (isOccupied[3] || isOccupied[5]) {
-        return [1]
-
-    } else if (isOccupied[2]) {
-        return [4]
-        
-    } else if (isOccupied[4]) {
-        return [2]
-        
-    } else if (!isOccupied.includes(true)) {
-        return [1, 2, 3, 4]
+        // Remove the last item and return
+        return result.slice(0, result.length - 1)
     }
+
+    // We want to maintain every-other spacing so
+    // deal with the special case of only 4 taken.
+    if (isOccupied[4 - 1]) {  // fourth slot is 3 (4 - 1)
+        return [2]
+    }
+
+    // If there's a urinal available without an occupied 
+    // neighbor urinal, choose the first such urinal.
+    urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(isOccupied)
+    if (urinalFreeOfNeighbors != -1) {
+        // Convert resulting index to one-based system
+        return [urinalFreeOfNeighbors + 1]
+    } else {
+        return []
+    }
+}
+
+// This general function takes in an array and returns
+// the index of the first slot without neighbors or -1
+// if no such slot exists.
+const firstOpenSlotWithoutNeighbors = isOccupied => {
+    for (let slot = 0; slot < isOccupied.length; slot++) {
+        leftSide = slot - 1
+        rightSide = slot + 1
+        if (isOccupied[slot]) {
+            continue
+        } else if (leftSide >= 0 && isOccupied[leftSide]) {
+            continue
+        } else if (rightSide < isOccupied.length && isOccupied[rightSide]) {
+            continue
+        } else {
+            return slot
+        }
+    }
+
+    return -1
 }
