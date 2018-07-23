@@ -4,7 +4,7 @@ This repo contains my work in practicing TDD for some recent algorithm programmi
 2. I thought it would be a good chance to practice some TDD.
 
 ### What's the Algorithm Behind Proper Urinal Etiquette?
-I saw the video [Proper Urinal Etiquette](https://www.youtube.com/watch?v=tKnWd3JVnfE&t=36s) and enjoyed it's tongue-and-cheek treatment of a subject that is well known to those who utilize urinals. That is, "Which one do I use?" Or in other words: "How can I provide as much privacy for myself and the other people in the bathroom during the process of elimination?"
+I saw the video [Proper Urinal Etiquette](https://www.youtube.com/watch?v=tKnWd3JVnfE) and enjoyed it's tongue-and-cheek treatment of a subject that is well known to those who utilize urinals. That is, "Which one do I use?" Or in other words: "How can I provide as much privacy for myself and the other people in the bathroom during the process of elimination?"
 
 Later, I realized that I didn't understand some of the underlying rules used to determine the suggestions for the more complex situations in the video, and I wondered if I could come up with a simple expression of the etiquette algorithm. With my interest in software, I thought trying to program the algorithm would be a fun way to arrive at the solution.
 
