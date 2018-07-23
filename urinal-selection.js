@@ -27,6 +27,9 @@ const urinalToUse = isOccupied => {
     } else if (isOccupied[2]) {
         return [4]
         
+    } else if (isOccupied[4]) {
+        return [2]
+        
     } else if (!isOccupied.includes(true)) {
         return [1, 2, 3, 4]
     }
