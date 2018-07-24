@@ -23,6 +23,8 @@ const urinalToUse = isOccupied => {
         return result.slice(0, result.length - 1)
     }
 
+    // Take the first open spot if every other stall
+    // is taken
     if (isOccupied[1 - 1] && isOccupied[3 - 1] && isOccupied[5 - 1]) {
         return [2]
     }
