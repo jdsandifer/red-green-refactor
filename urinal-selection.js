@@ -23,6 +23,10 @@ const urinalToUse = isOccupied => {
         return result.slice(0, result.length - 1)
     }
 
+    if (isOccupied[1 - 1] && isOccupied[3 - 1] && isOccupied[5 - 1]) {
+        return [2]
+    }
+
     // We want to maintain every-other spacing so
     // deal with the special case of only 4 taken.
     if (isOccupied[4 - 1]) {  // fourth slot is 3 (4 - 1)
