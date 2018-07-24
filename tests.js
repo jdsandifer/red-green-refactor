@@ -1,7 +1,6 @@
 QUnit.module("5 Urinals")
 QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     let occupiedUrinals = [false, false, false, false, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [1, 2, 3, 4], 
@@ -9,7 +8,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [false, false, true, false, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [1], 
@@ -17,7 +15,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [true, false, false, false, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [3], 
@@ -25,7 +22,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [false, false, false, false, true]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [1], 
@@ -33,7 +29,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [true, false, true, false, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [5], 
@@ -41,7 +36,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [true, false, false, false, true]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [3], 
@@ -49,7 +43,6 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [false, true, false, false, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [4], 
@@ -57,10 +50,16 @@ QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     )
 
     occupiedUrinals = [false, false, false, true, false]
-
     assert.deepEqual( 
         urinalToUse(occupiedUrinals),
         [2], 
         "When someone is at #4, we choose #2."
     )
-});
+})
+QUnit.test( "Difficult situations are handled correctly.", function( assert ) {
+    let occupiedUrinals = [ true, false, true, false, true ]
+    assert.deepEqual(
+        urinalToUse(occupiedUrinals), 
+        [2],
+        "When 1, 3, and 5 are taken, we choose #2.")
+})
