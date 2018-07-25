@@ -27,6 +27,8 @@ const urinalToUse = isOccupied => {
     // is taken
     if (isOccupied[1 - 1] && isOccupied[3 - 1] && isOccupied[5 - 1]) {
         return [2]
+    } else if (isOccupied[2-1] && isOccupied[4-1]) {
+        return [1]
     }
 
     // We want to maintain every-other spacing so
