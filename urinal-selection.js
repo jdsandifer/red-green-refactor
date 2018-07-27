@@ -16,7 +16,7 @@ const urinalToUse = isOccupied => {
     if (!isOccupied.includes(true)) {
         // Convert array to one-based indeces
         let result = isOccupied.map((value, index, array) => {
-            return index + 1
+            return index + 1  // convert zero-based index to one-based
         })
 
         // Remove the last item and return
@@ -25,6 +25,7 @@ const urinalToUse = isOccupied => {
 
     // Take the first open spot if every other stall
     // is taken
+    // Zero-based index means first stall is 1 - 1 = 0 (and so on)
     if (isOccupied[1 - 1] && isOccupied[3 - 1] && isOccupied[5 - 1]) {
         return [2]
     } else if (isOccupied[2-1] && isOccupied[4-1]) {
@@ -33,11 +34,11 @@ const urinalToUse = isOccupied => {
 
     // We want to maintain every-other spacing so
     // deal with the special case of only 4 taken.
-    if (isOccupied[4 - 1]) {  // fourth slot is 3 (4 - 1)
+    if (isOccupied[4 - 1]) {  // fourth slot is index 3 (4 - 1)
         return [2]
     }
 
-    // If there's a urinal available without an occupied 
+    // Otherwise, if there's a urinal available without an occupied 
     // neighbor urinal, choose the first such urinal.
     urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(isOccupied)
     if (urinalFreeOfNeighbors != -1) {
@@ -48,9 +49,10 @@ const urinalToUse = isOccupied => {
     }
 }
 
+
 // This general function takes in an array and returns
-// the index of the first slot without neighbors or -1
-// if no such slot exists.
+// the index of the first slot without neighbors or 
+// -1 if no such slot exists.
 const firstOpenSlotWithoutNeighbors = isOccupied => {
     for (let slot = 0; slot < isOccupied.length; slot++) {
         leftSide = slot - 1
@@ -66,5 +68,6 @@ const firstOpenSlotWithoutNeighbors = isOccupied => {
         }
     }
 
+    // Couldn't find a slot
     return -1
 }
