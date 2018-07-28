@@ -16,11 +16,16 @@ const urinalToUse = isOccupied => {
     if (!isOccupied.includes(true)) {
         // Convert array to one-based indeces
         let result = isOccupied.map((value, index, array) => {
-            return index + 1  // convert zero-based index to one-based
+            return index + 1  // convert zero-indexed boolean to one-based index
         })
 
         // Remove the last item and return
         return result.slice(0, result.length - 1)
+    }
+
+    // If three of five are taken, choose first open one
+    if (isOccupied[1 - 1] && isOccupied[2 - 1] && isOccupied[4 - 1]) {
+        return [3]
     }
 
     // Take the first open spot if every other stall
