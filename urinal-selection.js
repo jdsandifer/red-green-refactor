@@ -23,15 +23,21 @@ const urinalToUse = isOccupied => {
         return result.slice(0, result.length - 1)
     }
 
-    // If three of five are taken, choose first open one
-    if (isOccupied[1 - 1] && isOccupied[2 - 1] && isOccupied[4 - 1]) {
+    // If three of five are taken, choose the first open one
+    if (isOccupied[1 - 1] 
+        && isOccupied[2 - 1] 
+        && isOccupied[4 - 1]) {
+
         return [3]
     }
 
     // Take the first open spot if every other stall
     // is taken
     // Zero-based index means first stall is 1 - 1 = 0 (and so on)
-    if (isOccupied[1 - 1] && isOccupied[3 - 1] && isOccupied[5 - 1]) {
+    if (isOccupied[1 - 1] 
+        && isOccupied[3 - 1] 
+        && isOccupied[5 - 1]) {
+            
         return [2]
     } else if (isOccupied[2-1] && isOccupied[4-1]) {
         return [1]
