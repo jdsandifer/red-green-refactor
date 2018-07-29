@@ -46,7 +46,8 @@ const urinalToUse = isOccupied => {
     // We want to maintain every-other spacing so
     // deal with the special case of only 4 taken.
     // Also, deal with other cases via side effect...
-    if (isOccupied[4 - 1] && !isOccupied[3 - 1]) {  // fourth slot is index 3 (4 - 1)
+    if (isOccupied[4 - 1] && !isOccupied[3 - 1]) {
+        //  fourth ^ slot is index 3 (4 - 1)
         return [2]
     }
 
