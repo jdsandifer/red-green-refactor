@@ -57,8 +57,13 @@ const urinalToUse = isOccupied => {
     if (urinalFreeOfNeighbors != -1) {
         // Convert resulting index to one-based system
         return [urinalFreeOfNeighbors + 1]
-    } else {
-        return []
+    }
+
+    // Can't find a urinal without open neighbors so
+    // we have to take what we can get
+    firstOpenUrinal = isOccupied.indexOf(false)
+    if (firstOpenUrinal != -1) {
+        return [firstOpenUrinal + 1]  // convert to one-base index
     }
 }
 
