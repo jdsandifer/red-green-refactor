@@ -51,6 +51,11 @@ const urinalToUse = isOccupied => {
         return [2]
     }
 
+    // In certain cases, we have a choice of urinals
+    if (isOccupied[2 - 1] && isOccupied[3 - 1]) {
+        return [1, 5]
+    }
+
     // Otherwise, if there's a urinal available without an occupied 
     // neighbor urinal, choose the first such urinal.
     urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(isOccupied)
