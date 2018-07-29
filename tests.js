@@ -123,4 +123,10 @@ QUnit.test( "More difficult situations are handled correctly.", function( assert
         urinalToUse(occupiedUrinals), 
         [1],
         "When 3, 4, and 5 are taken, we choose #1.")
+
+    occupiedUrinals = [ true, false, true, true, false ]
+    assert.deepEqual(
+        urinalToUse(occupiedUrinals), 
+        [2],
+        "When 1, 3, and 4 are taken, we choose #2.")
 })
