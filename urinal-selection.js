@@ -14,12 +14,12 @@ const urinalToUse = isOccupied => {
     // If the bathroom is open, we can choose any urinal except
     // the last one.
     if (!isOccupied.includes(true)) {
-        // Convert array to one-based indeces
+        // Convert array values to one-based indeces
         let result = isOccupied.map((value, index, array) => {
             return index + 1  // convert zero-indexed boolean to one-based index
         })
 
-        // Remove the last item and return
+        // Remove the last item
         return result.slice(0, result.length - 1)
     }
 
@@ -62,6 +62,12 @@ const urinalToUse = isOccupied => {
     if (urinalFreeOfNeighbors != -1) {
         // Convert resulting index to one-based system
         return [urinalFreeOfNeighbors + 1]
+    }
+
+    // If there isn't a urinal with all neighbors open,
+    // take the least objectional one with one neighbor open
+    if (isOccupied[2 - 1] && isOccupied[5 - 1]) {
+        return [3]
     }
 
     // Can't find a urinal without open neighbors so
