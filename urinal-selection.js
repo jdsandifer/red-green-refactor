@@ -52,7 +52,10 @@ const urinalToUse = isOccupied => {
     }
 
     // In certain cases, we have a choice of urinals
-    if (isOccupied[2 - 1] && isOccupied[3 - 1] && !isOccupied[5 - 1]) {
+    if (isOccupied[2 - 1] 
+        && isOccupied[3 - 1] 
+        && !isOccupied[5 - 1]) {
+
         return [1, 5]
     }
 
@@ -66,7 +69,10 @@ const urinalToUse = isOccupied => {
 
     // If there isn't a urinal with all neighbors open,
     // take the least objectional one with one neighbor open
-    if (isOccupied[2 - 1] && isOccupied[5 - 1] && !isOccupied[3 - 1]) {
+    if (isOccupied[2 - 1] 
+        && isOccupied[5 - 1] 
+        && !isOccupied[3 - 1]) {
+        
         return [3]
     }
 
