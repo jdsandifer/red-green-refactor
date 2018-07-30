@@ -23,16 +23,16 @@ const urinalToUse = isOccupied => {
         return result.slice(0, result.length - 1)
     }
 
-    // If three of five are taken, choose the first open one
+    // If #1 and #4 are taken (with or without #2), we choose #3.
     if (isOccupied[1 - 1] 
-        && isOccupied[2 - 1] 
-        && isOccupied[4 - 1]) {
+        && isOccupied[4 - 1] 
+        && !isOccupied[3 - 1] 
+        && !isOccupied[5 - 1]) {
 
         return [3]
     }
 
-    // Take the first open spot if every other stall
-    // is taken
+    // Take the first open spot if every other stall is taken
     // Zero-based index means first stall is 1 - 1 = 0 (and so on)
     if (isOccupied[1 - 1] 
         && isOccupied[3 - 1] 
@@ -45,9 +45,12 @@ const urinalToUse = isOccupied => {
 
     // We want to maintain every-other spacing so
     // deal with the special case of only 4 taken.
-    // (Also, deal with other cases via side effect...)
-    if (isOccupied[4 - 1] && !isOccupied[1 - 1] && !isOccupied[3 - 1]) {
-        //  fourth ^ slot is index 3 (4 - 1)
+    // (Also, deal with other cases where #4 is taken and 
+    // we need to return 2.)
+    if (isOccupied[4 - 1]  //  fourth slot is index 3 (4 - 1)
+        && !isOccupied[1 - 1] 
+        && !isOccupied[3 - 1]) {
+
         return [2]
     }
 
@@ -73,8 +76,6 @@ const urinalToUse = isOccupied => {
         && isOccupied[5 - 1] 
         && !isOccupied[3 - 1]) {
         
-        return [3]
-    } else if (isOccupied[1 - 1] && isOccupied[4 - 1] && !isOccupied[3 - 1] && !isOccupied[5 - 1]) {
         return [3]
     }
 
