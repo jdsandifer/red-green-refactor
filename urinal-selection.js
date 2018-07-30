@@ -45,7 +45,7 @@ const urinalToUse = isOccupied => {
 
     // We want to maintain every-other spacing so
     // deal with the special case of only 4 taken.
-    // Also, deal with other cases via side effect...
+    // (Also, deal with other cases via side effect...)
     if (isOccupied[4 - 1] && !isOccupied[3 - 1]) {
         //  fourth ^ slot is index 3 (4 - 1)
         return [2]
@@ -70,7 +70,8 @@ const urinalToUse = isOccupied => {
         return [3]
     }
 
-    // Can't find a urinal without open neighbors so
+    // Can't find a urinal without open neighbors 
+    // and there's not an clear best choice so
     // we have to take what we can get
     firstOpenUrinal = isOccupied.indexOf(false)
     if (firstOpenUrinal != -1) {
@@ -97,6 +98,6 @@ const firstOpenSlotWithoutNeighbors = isOccupied => {
         }
     }
 
-    // Couldn't find a slot
+    // Couldn't find a slot without neighbors
     return -1
 }
