@@ -2,7 +2,7 @@
 // ones are occupied already (see "Proper Urinal Etiquette").
 //
 // "isOccupied" is an array of booleans - true means occupied.
-// Indeces represent urinals starting with the one nearest the door.
+// Indeces represent urinals starting with the one farthest from the door.
 const urinalToUse = isOccupied => {
 
     // Add a zeroeth item to the array so we can use
