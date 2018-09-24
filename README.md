@@ -21,4 +21,4 @@ Besides getting a clear picture for the etiquette algorithm in the video - my in
 ### Fun Stuff
 There are a few fun things in the video [Proper Urinal Etiquette](https://www.youtube.com/watch?v=tKnWd3JVnfE) that might only be noticed if you're paying close attention or if you watch the video several times (like I did for this project):
 1. There are a couple humorous characters used in the examples - I noticed a person in a gorilla suit, and a woman in a dress (humorous given the period of the piece although completely possible today).
-2. The case of #2 and #3 beign occupied is addressed twice with different advice. At 2:33 it's choose 1 or 5, and at the end it suggests 4 as the only option.
+2. The case of #2 and #3 beign occupied is addressed twice with different advice. At 2:33 it's choose 1 or 5, and at the end it suggests 4 as the only option. (I went with the former.)
