@@ -3,27 +3,26 @@
 //
 // "isOccupied" is an array of booleans - true means occupied.
 // Indeces represent urinals starting with the one farthest from the door.
+// The return is an array of 1-based indeces for acceptable urinal options.
 const urinalToUse = isOccupied => {
+    // TODO: Check that input array contains at least one open urinal.
+    //       Error if empty array or all occupied (true).
 
-    // Add a zeroeth item to the array so we can use
-    // indeces as if they started at one. 
-    // This will simplify array accessing.
-    // A different type makes accessing mistakes more obvious. 
-    //isOccupied = ["zero"].concat(isOccupied)
+    // TODO: Create a 1-based array or similar object from input
+    //       to allow for better readability of the urinal situation.
+    //       Maybe except the same type of input as output?
 
     // If the bathroom is open, we can choose any urinal except
     // the last one.
     if (!isOccupied.includes(true)) {
-        // Convert array values to one-based indeces
         let result = isOccupied.map((value, index, array) => {
-            return index + 1  // convert zero-indexed boolean to one-based index
+            // convert zero-indexed booleans to one-based indeces
+            return index + 1
         })
 
-        // Remove the last item
         return result.slice(0, result.length - 1)
     }
 
-    // If #1 and #4 are taken (with or without #2), we choose #3.
     if (isOccupied[1 - 1] 
         && isOccupied[4 - 1] 
         && !isOccupied[3 - 1] 
@@ -33,11 +32,9 @@ const urinalToUse = isOccupied => {
     }
 
     // Take the first open spot if every other stall is taken
-    // Zero-based index means first stall is 1 - 1 = 0 (and so on)
     if (isOccupied[1 - 1] 
         && isOccupied[3 - 1] 
         && isOccupied[5 - 1]) {
-
         return [2]
     } else if (isOccupied[2-1] && isOccupied[4-1]) {
         return [1]
@@ -47,18 +44,16 @@ const urinalToUse = isOccupied => {
     // deal with the special case of only 4 taken.
     // (Also, deal with other cases where #4 is taken and 
     // we need to return 2.)
-    if (isOccupied[4 - 1]  //  fourth slot is index 3 (4 - 1)
+    if (isOccupied[4 - 1]
         && !isOccupied[1 - 1] 
         && !isOccupied[3 - 1]) {
-
         return [2]
     }
 
-    // In certain cases, we have a choice of urinals
+    // In one case, we have a choice of urinals
     if (isOccupied[2 - 1] 
         && isOccupied[3 - 1] 
         && !isOccupied[5 - 1]) {
-
         return [1, 5]
     }
 
@@ -66,7 +61,6 @@ const urinalToUse = isOccupied => {
     // neighbor urinal, choose the first such urinal.
     urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(isOccupied)
     if (urinalFreeOfNeighbors != -1) {
-        // Convert resulting index to one-based system
         return [urinalFreeOfNeighbors + 1]
     }
 
@@ -75,7 +69,6 @@ const urinalToUse = isOccupied => {
     if (isOccupied[2 - 1] 
         && isOccupied[5 - 1] 
         && !isOccupied[3 - 1]) {
-        
         return [3]
     }
 
@@ -84,7 +77,7 @@ const urinalToUse = isOccupied => {
     // we have to take what we can get
     firstOpenUrinal = isOccupied.indexOf(false)
     if (firstOpenUrinal != -1) {
-        return [firstOpenUrinal + 1]  // convert to one-base index
+        return [firstOpenUrinal + 1]
     }
 }
 
