@@ -1,102 +1,107 @@
 // Decide what urinal to use based on which
 // ones are occupied already (see "Proper Urinal Etiquette").
+// This algorithm only works for rooms with 35 or fewer urinals.
 //
-// "isOccupied" is an array of booleans - true means occupied.
+// "urinalSituation" is an array of booleans - true means occupied.
 // Indeces represent urinals starting with the one farthest from the door.
 // The return is an array of 1-based indeces for acceptable urinal options.
 const urinalToUse = isOccupied => {
+  // TODO: Ensure isOccupied has 35 or fewer booleans
+  const urinalSituation = isOccupied.map(urinalSituationFromBooleanArray).join("")
+  return urinalChoice(urinalSituation)
+}
+
+// Convert boolean array to "urinal situation" string like this: "..3.5"
+// Each character represents a urinal, "." means unoccupied,
+// a number represents occupied and is the 1-based index
+// starting farthest from the bathroom entry door
+const urinalSituationFromBooleanArray = (isTaken, index) => {
+  const oneBasedIndex = index + 1
+  const baseThirtySixDigitForOccupied = 
+      oneBasedIndex <= 9 ? oneBasedIndex : String.fromCharCode(oneBasedIndex + 87)
+  return isTaken ? baseThirtySixDigitForOccupied : "."
+}
+
+// Expects a urinalSituation string like this: "..3.5"
+// Each character represents a urinal, "." means unoccupied,
+// a number represents occupied and represents the 1-based index
+// starting farthest from the bathroom entry door
+const urinalChoice = urinalSituation => {
     // TODO: Check that input array contains at least one open urinal.
     //       Error if empty array or all occupied (true).
 
-    // TODO: Create a 1-based array or similar object from input
-    //       to allow for better readability of the urinal situation.
-    //       Maybe except the same type of input as output?
-
-    // If the bathroom is open, we can choose any urinal except
-    // the last one.
-    if (!isOccupied.includes(true)) {
-        let result = isOccupied.map((value, index, array) => {
-            // convert zero-indexed booleans to one-based indeces
-            return index + 1
-        })
-
-        return result.slice(0, result.length - 1)
+    const allUrinalsAreOpen = [].every.call(urinalSituation, digit => digit === ".")
+    if (allUrinalsAreOpen) {
+        let tempArray = new Array(urinalSituation.length - 1)
+        tempArray.fill(1)
+        const allUrinalsButLast = tempArray.map((_, index) => index + 1)
+        return allUrinalsButLast
     }
 
-    if (isOccupied[1 - 1] 
-        && isOccupied[4 - 1] 
-        && !isOccupied[3 - 1] 
-        && !isOccupied[5 - 1]) {
-
+    if (matchesPattern("1*.4.", urinalSituation)) {
         return [3]
     }
 
     // Take the first open spot if every other stall is taken
-    if (isOccupied[1 - 1] 
-        && isOccupied[3 - 1] 
-        && isOccupied[5 - 1]) {
+    if (matchesPattern("1.3.5", urinalSituation)) {
         return [2]
-    } else if (isOccupied[2-1] && isOccupied[4-1]) {
+    } else if (matchesPattern(".2.4.", urinalSituation)) {
         return [1]
     }
 
-    // We want to maintain every-other spacing so
-    // deal with the special case of only 4 taken.
-    // (Also, deal with other cases where #4 is taken and 
-    // we need to return 2.)
-    if (isOccupied[4 - 1]
-        && !isOccupied[1 - 1] 
-        && !isOccupied[3 - 1]) {
+    if (matchesPattern("...4*", urinalSituation)) {
         return [2]
     }
 
-    // In one case, we have a choice of urinals
-    if (isOccupied[2 - 1] 
-        && isOccupied[3 - 1] 
-        && !isOccupied[5 - 1]) {
+    if (matchesPattern(".23..", urinalSituation)) {
         return [1, 5]
     }
 
-    // Otherwise, if there's a urinal available without an occupied 
-    // neighbor urinal, choose the first such urinal.
-    urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(isOccupied)
+    const urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(urinalSituation)
     if (urinalFreeOfNeighbors != -1) {
-        return [urinalFreeOfNeighbors + 1]
+        return [urinalFreeOfNeighbors]
     }
 
     // If there isn't a urinal with all neighbors open,
     // take the least objectional one with one neighbor open
-    if (isOccupied[2 - 1] 
-        && isOccupied[5 - 1] 
-        && !isOccupied[3 - 1]) {
+    if (matchesPattern("*2..5", urinalSituation)) {
         return [3]
     }
 
-    // Can't find a urinal without open neighbors 
-    // and there's not an clear best choice so
-    // we have to take what we can get
-    firstOpenUrinal = isOccupied.indexOf(false)
-    if (firstOpenUrinal != -1) {
-        return [firstOpenUrinal + 1]
-    }
+    const firstOpenUrinal = urinalSituation.indexOf(".")
+    return [firstOpenUrinal + 1]
 }
 
+const matchesPattern = (pattern, situation) => {
+  // TODO: Check if pattern is longer than situation
+  // or either is empty (bad input)
+  for (let i = 1; i <= pattern.length; i++) {
+    if (pattern.charAt(i-1) === "*") {
+      continue
+    }
+    if (pattern.charAt(i-1) === situation.charAt(i-1)) {
+      continue
+    }
+    return false
+  }
+  return true
+}
 
-// This general function takes in an array and returns
-// the index of the first slot without neighbors or 
+// This general function takes in urinalSituation string and returns
+// the one-based index of the first open slot without neighbors or 
 // -1 if no such slot exists.
-const firstOpenSlotWithoutNeighbors = isOccupied => {
-    for (let slot = 0; slot < isOccupied.length; slot++) {
+const firstOpenSlotWithoutNeighbors = urinalSituation => {
+    for (let slot = 0; slot < urinalSituation.length; slot++) {
         leftSide = slot - 1
         rightSide = slot + 1
-        if (isOccupied[slot]) {
+        if (urinalSituation.charAt(slot) !== ".") {
             continue
-        } else if (leftSide >= 0 && isOccupied[leftSide]) {
+        } else if (leftSide >= 0 && urinalSituation.charAt(leftSide) !== ".") {
             continue
-        } else if (rightSide < isOccupied.length && isOccupied[rightSide]) {
+        } else if (rightSide < urinalSituation.length && urinalSituation.charAt(rightSide) !== ".") {
             continue
         } else {
-            return slot
+            return slot + 1
         }
     }
 
