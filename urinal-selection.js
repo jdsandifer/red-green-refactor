@@ -11,9 +11,10 @@ const urinalToUse = isOccupied => {
   return urinalChoice(urinalSituation)
 }
 
+
 // Convert boolean array to "urinal situation" string like this: "..3.5"
 // Each character represents a urinal, "." means unoccupied,
-// a number represents occupied and is the 1-based index
+// a number represents occupied and represents the 1-based index
 // starting farthest from the bathroom entry door
 const urinalSituationFromBooleanArray = (isTaken, index) => {
   const oneBasedIndex = index + 1
@@ -21,6 +22,7 @@ const urinalSituationFromBooleanArray = (isTaken, index) => {
       oneBasedIndex <= 9 ? oneBasedIndex : String.fromCharCode(oneBasedIndex + 87)
   return isTaken ? baseThirtySixDigitForOccupied : "."
 }
+
 
 // Expects a urinalSituation string like this: "..3.5"
 // Each character represents a urinal, "." means unoccupied,
@@ -38,18 +40,15 @@ const urinalChoice = urinalSituation => {
         return allUrinalsButLast
     }
 
-    if (matchesPattern("1*.4.", urinalSituation)) {
+    if (matchesPattern("1*.4.", urinalSituation)
+        || matchesPattern("*2..5", urinalSituation)) {
         return [3]
     }
 
-    // Take the first open spot if every other stall is taken
-    if (matchesPattern("1.3.5", urinalSituation)) {
-        return [2]
-    } else if (matchesPattern(".2.4.", urinalSituation)) {
+    if (matchesPattern(".2.4.", urinalSituation)) {
         return [1]
-    }
-
-    if (matchesPattern("...4*", urinalSituation)) {
+    } else if (matchesPattern("1.3.5", urinalSituation)
+               || matchesPattern("...4*", urinalSituation)) {
         return [2]
     }
 
@@ -62,15 +61,10 @@ const urinalChoice = urinalSituation => {
         return [urinalFreeOfNeighbors]
     }
 
-    // If there isn't a urinal with all neighbors open,
-    // take the least objectional one with one neighbor open
-    if (matchesPattern("*2..5", urinalSituation)) {
-        return [3]
-    }
-
     const firstOpenUrinal = urinalSituation.indexOf(".")
     return [firstOpenUrinal + 1]
 }
+
 
 const matchesPattern = (pattern, situation) => {
   // TODO: Check if pattern is longer than situation
@@ -86,6 +80,7 @@ const matchesPattern = (pattern, situation) => {
   }
   return true
 }
+
 
 // This general function takes in urinalSituation string and returns
 // the one-based index of the first open slot without neighbors or 
