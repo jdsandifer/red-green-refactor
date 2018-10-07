@@ -1,37 +1,22 @@
-// Decide what urinal to use based on which
-// ones are occupied already (see "Proper Urinal Etiquette").
-// This algorithm only works for rooms with 35 or fewer urinals.
-//
-// "urinalSituation" is an array of booleans - true means occupied.
-// Indeces represent urinals starting with the one farthest from the door.
-// The return is an array of 1-based indeces for acceptable urinal options.
+// See "Proper Urinal Etiquette" video to understand this algorithm.
 const urinalToUse = isOccupied => {
-  // TODO: Ensure isOccupied has 35 or fewer booleans
+  // TODO: Ensure isOccupied has 35 or fewer booleans and at least one is false
   const urinalSituation = isOccupied.map(urinalSituationFromBooleanArray).join("")
   return urinalChoice(urinalSituation)
 }
 
 
-// Convert boolean array to "urinal situation" string like this: "..3.5"
-// Each character represents a urinal, "." means unoccupied,
-// a number represents occupied and represents the 1-based index
-// starting farthest from the bathroom entry door
 const urinalSituationFromBooleanArray = (isTaken, index) => {
+  const unoccupiedDigit = "."
   const oneBasedIndex = index + 1
   const baseThirtySixDigitForOccupied = 
       oneBasedIndex <= 9 ? oneBasedIndex : String.fromCharCode(oneBasedIndex + 87)
-  return isTaken ? baseThirtySixDigitForOccupied : "."
+  
+  return isTaken ? baseThirtySixDigitForOccupied : unoccupiedDigit
 }
 
 
-// Expects a urinalSituation string like this: "..3.5"
-// Each character represents a urinal, "." means unoccupied,
-// a number represents occupied and represents the 1-based index
-// starting farthest from the bathroom entry door
 const urinalChoice = urinalSituation => {
-    // TODO: Check that input array contains at least one open urinal.
-    //       Error if empty array or all occupied (true).
-
     const allUrinalsAreOpen = [].every.call(urinalSituation, digit => digit === ".")
     if (allUrinalsAreOpen) {
         let tempArray = new Array(urinalSituation.length - 1)
@@ -61,14 +46,12 @@ const urinalChoice = urinalSituation => {
         return [urinalFreeOfNeighbors]
     }
 
-    const firstOpenUrinal = urinalSituation.indexOf(".")
-    return [firstOpenUrinal + 1]
+    const firstOpenUrinal = urinalSituation.indexOf(".") + 1
+    return [firstOpenUrinal]
 }
 
 
 const matchesPattern = (pattern, situation) => {
-  // TODO: Check if pattern is longer than situation
-  // or either is empty (bad input)
   for (let i = 1; i <= pattern.length; i++) {
     if (pattern.charAt(i-1) === "*") {
       continue
@@ -82,9 +65,6 @@ const matchesPattern = (pattern, situation) => {
 }
 
 
-// This general function takes in urinalSituation string and returns
-// the one-based index of the first open slot without neighbors or 
-// -1 if no such slot exists.
 const firstOpenSlotWithoutNeighbors = urinalSituation => {
     for (let slot = 0; slot < urinalSituation.length; slot++) {
         leftSide = slot - 1
@@ -100,6 +80,6 @@ const firstOpenSlotWithoutNeighbors = urinalSituation => {
         }
     }
 
-    // Couldn't find a slot without neighbors
-    return -1
+    const noOpenSlotCode = -1
+    return noOpenSlotCode
 }
