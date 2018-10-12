@@ -1,12 +1,11 @@
 // See "Proper Urinal Etiquette" video to understand this algorithm.
-const urinalToUse = isOccupied => {
+const urinalToUse = whetherEachUrinalIsOccupied => {
     // TODO: Ensure isOccupied has 35 or fewer booleans and at least one is false
-    const urinalSituation = isOccupied.map(urinalSituationFromBooleanArray).join("")
+    const urinalSituation = whetherEachUrinalIsOccupied.map(urinalDigit).join("")
     return urinalChoice(urinalSituation)
 }
 
-
-const urinalSituationFromBooleanArray = (isTaken, index) => {
+const urinalDigit = (isTaken, index) => {
     const unoccupiedDigit = "."
     const oneBasedIndex = index + 1
     const baseThirtySixDigitForOccupied = 
@@ -15,12 +14,11 @@ const urinalSituationFromBooleanArray = (isTaken, index) => {
     return isTaken ? baseThirtySixDigitForOccupied : unoccupiedDigit
 }
 
-
 const urinalChoice = urinalSituation => {
     const allUrinalsAreOpen = [].every.call(urinalSituation, digit => digit === ".")
     if (allUrinalsAreOpen) {
         const oneLessThanNumberOfUrinals = urinalSituation.length - 1
-        const anyUrinalButLast = oneBasedIndexArrayWithLength(oneLessThanNumberOfUrinals)
+        const anyUrinalButLast = oneThrough(oneLessThanNumberOfUrinals)
         return anyUrinalButLast
     }
 
@@ -31,16 +29,13 @@ const urinalChoice = urinalSituation => {
     return urinalChoiceInOtherCases(urinalSituation)
 }
 
-
 const urinalChoiceFromVideo = situation => {
     if (matchesPattern("1*.4.", situation)
         || matchesPattern("*2..5", situation)) {
         return [3]
     }
 
-    if (matchesPattern(".2.4.", situation)) {
-        return [1]
-    } else if (matchesPattern("1.3.5", situation)
+    if (matchesPattern("1.3.5", situation)
                || matchesPattern("...4*", situation)) {
         return [2]
     }
@@ -52,7 +47,6 @@ const urinalChoiceFromVideo = situation => {
     return urinalChoiceInOtherCases(situation)
 }
 
-
 const urinalChoiceInOtherCases = situation => {
     const urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(situation)
     if (urinalFreeOfNeighbors != -1) {
@@ -63,9 +57,8 @@ const urinalChoiceInOtherCases = situation => {
     return [firstOpenUrinal]
 }
 
-
-const oneBasedIndexArrayWithLength = length => {
-    let tempArray = new Array(length)
+const oneThrough = max => {
+    let tempArray = new Array(max)
     tempArray.fill(1)
     return tempArray.map((_, index) => index + 1)
 }
