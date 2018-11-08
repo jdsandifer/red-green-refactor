@@ -1,8 +1,21 @@
 // See "Proper Urinal Etiquette" video to understand this algorithm.
 const urinalToUse = whetherEachUrinalIsOccupied => {
-    // TODO: Ensure isOccupied has 35 or fewer booleans and at least one is false
+    const numberOfUrinals = whetherEachUrinalIsOccupied.length
+    if ( numberOfUrinals === 0) {
+        return []
+    }
+    const maxUrinalsForThisFunction = 35  // due to internal representation
+    if (numberOfUrinals > maxUrinalsForThisFunction) {
+        throw new TooManyUrinals()
+    }
+
     const urinalSituation = whetherEachUrinalIsOccupied.map(urinalDigit).join("")
     return urinalChoice(urinalSituation)
+}
+
+function TooManyUrinals() {
+    this.message = "There are too many urinals in the situation.";
+    this.name = 'TooManyUrinals';
 }
 
 const urinalDigit = (isTaken, index) => {
