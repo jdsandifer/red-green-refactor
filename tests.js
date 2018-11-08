@@ -1,3 +1,22 @@
+QUnit.module("General Cases")
+QUnit.test( "Input is verified and trivial cases are handled.", function( assert ) {
+    assert.expect(2)
+    
+    const noUrinals = []
+    assert.deepEqual( 
+        urinalToUse(noUrinals),
+        [], 
+        "When no urinals exist, we get no choice (empty array)."
+    )
+
+    const thirtySixUrinals = [false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, true, true]
+    assert.throws( 
+        () => urinalToUse(thirtySixUrinals),
+        TooManyUrinals, 
+        "When more than 35 urinals exist, we throw an error."
+    )
+})
+
 QUnit.module("5 Urinals")
 QUnit.test( "Easy situations are handled correctly.", function( assert ) {
     let occupiedUrinals = [false, false, false, false, false]
