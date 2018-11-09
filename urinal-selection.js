@@ -15,7 +15,7 @@ const urinalToUse = whetherEachUrinalIsOccupied => {
 
 function TooManyUrinals() {
     this.message = "There are too many urinals in the situation.";
-    this.name = 'TooManyUrinals';
+    this.name = "TooManyUrinals";
 }
 
 const urinalDigit = (isTaken, index) => {
@@ -42,6 +42,12 @@ const urinalChoice = urinalSituation => {
     return urinalChoiceInOtherCases(urinalSituation)
 }
 
+const oneThrough = max => {
+    let tempArray = new Array(max)
+    tempArray.fill(1)
+    return tempArray.map((_, index) => index + 1)
+}
+
 const urinalChoiceFromVideo = situation => {
     if (matchesPattern("1*.4.", situation)
         || matchesPattern("*2..5", situation)) {
@@ -60,23 +66,6 @@ const urinalChoiceFromVideo = situation => {
     return urinalChoiceInOtherCases(situation)
 }
 
-const urinalChoiceInOtherCases = situation => {
-    const urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(situation)
-    if (urinalFreeOfNeighbors != -1) {
-        return [urinalFreeOfNeighbors]
-    }
-
-    const firstOpenUrinal = situation.indexOf(".") + 1
-    return [firstOpenUrinal]
-}
-
-const oneThrough = max => {
-    let tempArray = new Array(max)
-    tempArray.fill(1)
-    return tempArray.map((_, index) => index + 1)
-}
-
-
 const matchesPattern = (pattern, situation) => {
     for (let i = 1; i <= pattern.length; i++) {
         if (pattern.charAt(i-1) === "*") {
@@ -90,11 +79,20 @@ const matchesPattern = (pattern, situation) => {
     return true
 }
 
+const urinalChoiceInOtherCases = situation => {
+    const urinalFreeOfNeighbors = firstOpenSlotWithoutNeighbors(situation)
+    if (urinalFreeOfNeighbors != -1) {
+        return [urinalFreeOfNeighbors]
+    }
+
+    const firstOpenUrinal = situation.indexOf(".") + 1
+    return [firstOpenUrinal]
+}
 
 const firstOpenSlotWithoutNeighbors = urinalSituation => {
     for (let slot = 0; slot < urinalSituation.length; slot++) {
-        leftSide = slot - 1
-        rightSide = slot + 1
+        let leftSide = slot - 1
+        let rightSide = slot + 1
         if (urinalSituation.charAt(slot) !== ".") {
             continue
         } else if (leftSide >= 0 && urinalSituation.charAt(leftSide) !== ".") {
